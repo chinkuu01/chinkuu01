@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Chinku</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cake-color: #ff85a2;
+            --frosting-color: #ffffff;
+            --plate-color: #333;
+            --candle-color: #70d6ff;
+            --text-main: #ff0a54;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- THE UPGRADED CAKE --- */
+        .cake-container {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            margin: 0 auto 40px auto;
+            cursor: pointer;
+        }
+
+        .cake-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 250px;
+            height: 90px;
+            background: var(--cake-color);
+            border-radius: 50px / 25px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.3);
+        }
+
+        .cake-top {
+            position: absolute;
+            bottom: 40px;
+            left: 25px;
+            width: 200px;
+            height: 80px;
+            background: #ffb3c1;
+            border-radius: 40px / 20px;
+            z-index: 2;
+        }
+
+        /* Frosting Drips */
+        .dripping {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: var(--frosting-color);
+            border-radius: 0 0 20px 20px;
+            z-index: 3;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 50px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, var(--candle-color) 5px, var(--candle-color) 10px);
+            border-radius: 4px;
+            z-index: 4;
+        }
+
+        .flame {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 28px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px 5px rgba(255, 165, 0, 0.8);
+            animation: burn 0.3s infinite alternate;
+        }
+
+        @keyframes burn {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        /* --- TYPOGRAPHY & ANIMATION --- */
+        .wish-text {
+            perspective: 1000px;
+        }
+
+        .happy-birthday {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: #fff;
+            margin: 0;
+            text-shadow: 0 0 10px var(--text-main), 0 0 20px var(--text-main);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--text-main);
+            margin: -10px 0 0 0;
+            letter-spacing: 5px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: popIn 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards 1.2s;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- CELEBRATION SHOWER --- */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            top: -10px;
+            border-radius: 2px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="cake-container">
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+            <div class="cake-top">
+                <div class="dripping"></div>
+            </div>
+            <div class="cake-bottom"></div>
+        </div>
+
+        <div class="wish-text">
+            <h1 class="happy-birthday">Happy Birthday</h1>
+            <h2 class="name" id="userName">CHINKU</h2>
+        </div>
+    </div>
+
+    <script>
+        // Array of vibrant celebration colors
+        const colors = ['#FF0A54', '#FF477E', '#FF7096', '#FF85A2', '#FBB1BD', '#70D6FF', '#FFD60A', '#32FF7E'];
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            
+            // Random properties
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 8 + 5 + 'px';
+            const left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 3 + 2 + 's';
+            const shape = Math.random() > 0.5 ? '50%' : '0%'; // Mix circles and squares
+
+            confetti.style.background = color;
+            confetti.style.width = size;
+            confetti.style.height = size;
+            confetti.style.left = left;
+            confetti.style.borderRadius = shape;
+            confetti.style.animationDuration = duration;
+            confetti.style.boxShadow = `0 0 10px ${color}`;
+
+            document.body.appendChild(confetti);
+
+            // Remove from DOM after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Generate confetti continuously
+        setInterval(createConfetti, 100);
+
+        // Fun interaction: Click the cake to blow out the flame!
+        const cake = document.querySelector('.cake-container');
+        const flame = document.querySelector('.flame');
+        
+        cake.addEventListener('click', () => {
+            flame.style.display = 'none';
+            // Trigger a big burst of confetti when flame is "blown out"
+            for(let i=0; i<50; i++) {
+                setTimeout(createConfetti, i * 10);
+            }
+        });
+    </script>
+</body>
+</html>
+
